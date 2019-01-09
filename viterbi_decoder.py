@@ -29,10 +29,18 @@ class ViterbiDecoder:
     def calculate_PM(self, min_prev_state, pm, next_state1, next_state2, current_input):
 
         diff_pass1 = self.count_diff(self.state_machine_in[(min_prev_state,next_state1)][1] , current_input)
-        self.PM_current[next_state1] = pm + diff_pass1
+        if next_state1 in self.PM_current:
+            if pm + diff_pass1 < self.PM_current[next_state1]:
+                self.PM_current[next_state1] = pm + diff_pass1
+        else:
+            self.PM_current[next_state1] = pm + diff_pass1
 
         diff_pass2 = self.count_diff(self.state_machine_in[(min_prev_state, next_state2)][1], current_input)
-        self.PM_current[next_state2] = pm + diff_pass2
+        if next_state2 in self.PM_current:
+            if pm + diff_pass2 < self.PM_current[next_state2]:
+                self.PM_current[next_state2] = pm + diff_pass2
+        else:
+            self.PM_current[next_state2] = pm + diff_pass2
 
     def decode(self, input):
         if len(input) % 2 != 0:
@@ -58,6 +66,9 @@ class ViterbiDecoder:
 
             self.PM_prev = copy.deepcopy(self.PM_current)
             self.PM_current = {}
+
+            if len(input) == 0:
+                print("last PM: ", pm)
 
         return decoded_output
 
