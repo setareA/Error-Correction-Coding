@@ -6,6 +6,7 @@ import viterbi_decoder
 import scipy.io
 import noise
 
+
 def convert_mat_to_dictionary(size, mat):
 
     frequency = {}
