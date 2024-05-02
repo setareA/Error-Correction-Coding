@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-
+#just checking how pull request works
 class HeapNode:
         def __init__(self, char, freq):
             self.char = char
